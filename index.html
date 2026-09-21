@@ -1022,178 +1022,167 @@
     <img id="lightboxImage" src="" alt="Recuerdo ampliado" />
   </div>
 
-  <script>
-    const photoLightbox = document.getElementById("photoLightbox");
-    const lightboxImage = document.getElementById("lightboxImage");
-    const lightboxClose = document.getElementById("lightboxClose");
+  
+<script>
+  // ================================
+  // 🌙 LIGHTBOX DE FOTOGRAFÍAS
+  // ================================
 
-    document.querySelectorAll(".photo-clickable").forEach(card => {
-      card.addEventListener("click", () => {
-        lightboxImage.src = card.dataset.full;
-        lightboxImage.alt = card.querySelector("img")?.alt || "Recuerdo ampliado";
-        photoLightbox.classList.add("open");
-      });
+  const photoLightbox = document.getElementById("photoLightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const lightboxClose = document.getElementById("lightboxClose");
+
+  document.querySelectorAll(".photo-clickable").forEach(card => {
+    card.addEventListener("click", () => {
+      const image = card.querySelector("img");
+
+      lightboxImage.src = card.dataset.full;
+      lightboxImage.alt = image?.alt || "Recuerdo ampliado";
+
+      photoLightbox.classList.add("open");
+      document.body.style.overflow = "hidden";
     });
+  });
 
-    function closeLightbox() {
-      photoLightbox.classList.remove("open");
-      lightboxImage.src = "";
+  function closeLightbox() {
+    photoLightbox.classList.remove("open");
+    lightboxImage.src = "";
+    document.body.style.overflow = "auto";
+  }
+
+  lightboxClose.addEventListener("click", closeLightbox);
+
+  photoLightbox.addEventListener("click", event => {
+    if (event.target === photoLightbox) {
+      closeLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape") {
+      closeLightbox();
+    }
+  });
+
+
+  // ================================
+  // ✨ ESTRELLAS, CORAZONES Y DESTELLOS
+  // ================================
+
+  function createFloatingElements() {
+
+    const stars = document.getElementById("stars");
+    const hearts = document.getElementById("hearts");
+    const petals = document.getElementById("petals");
+
+    // Estrellas
+    for (let i = 0; i < 90; i++) {
+
+      const star = document.createElement("span");
+
+      star.className = "star";
+
+      star.style.left = Math.random() * 100 + "%";
+      star.style.top = Math.random() * 100 + "%";
+      star.style.animationDelay = Math.random() * 4 + "s";
+      star.style.animationDuration =
+        2 + Math.random() * 4 + "s";
+
+      stars.appendChild(star);
     }
 
-    lightboxClose.addEventListener("click", closeLightbox);
-    photoLightbox.addEventListener("click", (event) => {
-      if (event.target === photoLightbox) closeLightbox();
-    });
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeLightbox();
-    });
 
-    const letterText = `Mi Dani, mi luz de Luna 🌙
+    // Corazones
+    for (let i = 0; i < 22; i++) {
 
-Hoy quiero recordarte algo que nunca quiero que olvides: eres profundamente amada.
+      const heart = document.createElement("span");
 
-No solamente por los momentos bonitos, por las sonrisas o por los días en los que todo sale bien. Te amo por quien eres, por tu forma de ser, por tus pequeños detalles, por tus ocurrencias y por esa manera tan tuya de hacer que mi mundo se sienta más especial.
+      heart.className = "heart";
 
-Quiero que cuando abras esta página sientas un abrazo mío, incluso si no estoy justo a tu lado. Quiero que recuerdes que tienes a alguien que piensa en ti, que te elige y que desea seguir construyendo una vida llena de recuerdos contigo.
+      heart.textContent =
+        Math.random() > 0.5 ? "♥" : "♡";
 
-Desde el 26 de febrero de 2026 comenzó una historia que para mí vale muchísimo. Y aunque todavía nos quedan tantos momentos por vivir, quiero disfrutar cada uno de ellos contigo: las salidas sencillas, las películas, las comidas, las risas, los abrazos y también los días difíciles en los que lo más importante será cuidarnos y acompañarnos.
+      heart.style.left =
+        Math.random() * 100 + "%";
 
-Dani, no tienes que hacer nada extraordinario para merecer amor. Para mí eres valiosa tal como eres. Quiero que te sientas escuchada, respetada, cuidada y querida. Quiero que tengas la tranquilidad de saber que tu sonrisa me importa y que tu corazón tiene un lugar muy especial en el mío.
+      heart.style.animationDuration =
+        9 + Math.random() * 12 + "s";
 
-Si pudiera convertir mis sentimientos en flores, te regalaría un jardín entero. Si pudiera guardar cada momento feliz contigo, construiría un cielo lleno de estrellas para que nunca olvidaras lo especial que eres para mí.
+      heart.style.animationDelay =
+        Math.random() * 12 + "s";
 
-Gracias por ser parte de mi vida, por compartir tu camino conmigo y por permitirme llamarte mi amor.
+      heart.style.fontSize =
+        12 + Math.random() * 24 + "px";
 
-Te amo, mi luz de Luna. Espero que esta pequeña sorpresa te recuerde, aunque sea un poquito, lo mucho que significas para mí.
-
-Con todo mi amor,
-tu solecito y amado marido. ❤️`;
-
-    const typedLetter = document.getElementById("typedLetter");
-    let index = 0;
-
-    function typeLetter() {
-      if (index < letterText.length) {
-        typedLetter.innerHTML = "<p>" +
-          letterText.slice(0, index + 1)
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;") +
-          "</p>";
-        index++;
-        setTimeout(typeLetter, 22);
-      }
+      hearts.appendChild(heart);
     }
-    typeLetter();
 
-    function createFloatingElements() {
-      const stars = document.getElementById("stars");
-      const hearts = document.getElementById("hearts");
-      const petals = document.getElementById("petals");
 
-      for (let i = 0; i < 90; i++) {
-        const star = document.createElement("span");
-        star.className = "star";
-        star.style.left = Math.random() * 100 + "%";
-        star.style.top = Math.random() * 100 + "%";
-        star.style.animationDelay = Math.random() * 4 + "s";
-        star.style.animationDuration = 2 + Math.random() * 4 + "s";
-        stars.appendChild(star);
-      }
+    // Destellos
+    for (let i = 0; i < 15; i++) {
 
-      for (let i = 0; i < 22; i++) {
-        const heart = document.createElement("span");
-        heart.className = "heart";
-        heart.textContent = Math.random() > 0.5 ? "♥" : "♡";
-        heart.style.left = Math.random() * 100 + "%";
-        heart.style.animationDuration = 9 + Math.random() * 12 + "s";
-        heart.style.animationDelay = Math.random() * 12 + "s";
-        heart.style.fontSize = 12 + Math.random() * 24 + "px";
-        hearts.appendChild(heart);
-      }
+      const petal = document.createElement("span");
 
-      for (let i = 0; i < 15; i++) {
-        const petal = document.createElement("span");
-        petal.className = "petal";
-        petal.textContent = "✦";
-        petal.style.left = Math.random() * 100 + "%";
-        petal.style.animationDuration = 10 + Math.random() * 12 + "s";
-        petal.style.animationDelay = Math.random() * 12 + "s";
-        petals.appendChild(petal);
-      }
+      petal.className = "petal";
+
+      petal.textContent = "✦";
+
+      petal.style.left =
+        Math.random() * 100 + "%";
+
+      petal.style.animationDuration =
+        10 + Math.random() * 12 + "s";
+
+      petal.style.animationDelay =
+        Math.random() * 12 + "s";
+
+      petals.appendChild(petal);
     }
-    createFloatingElements();
+  }
 
-    const startDate = document.getElementById("startDate");
-    const savedDate = localStorage.getItem("romanticStartDate");
-    if (!savedDate) startDate.value = "2026-02-26";
-    if (savedDate) startDate.value = savedDate;
+  createFloatingElements();
 
-    function updateCounter() {
-      if (!startDate.value) {
-        ["years", "months", "days", "hours"].forEach(id => {
-          document.getElementById(id).textContent = "—";
+
+  // ================================
+  // 💌 APERTURA DE LA SORPRESA
+  // ================================
+
+  const openingScreen =
+    document.getElementById("openingScreen");
+
+  const openSurprise =
+    document.getElementById("openSurprise");
+
+  openSurprise.addEventListener("click", () => {
+
+    openingScreen.classList.add("opened");
+
+    document.body.style.overflow = "auto";
+
+    // Llevar suavemente hacia los recuerdos
+    setTimeout(() => {
+
+      const fotosSection =
+        document.getElementById("fotos");
+
+      if (fotosSection) {
+        fotosSection.scrollIntoView({
+          behavior: "smooth"
         });
-        return;
       }
 
-      const start = new Date(startDate.value + "T00:00:00");
-      const now = new Date();
+    }, 850);
+  });
 
-      if (start > now) return;
 
-      let years = now.getFullYear() - start.getFullYear();
-      let months = now.getMonth() - start.getMonth();
-      let days = now.getDate() - start.getDate();
+  // ================================
+  // 🌙 EVITAR SCROLL MIENTRAS ESTÁ
+  // ABIERTA LA PANTALLA INICIAL
+  // ================================
 
-      if (days < 0) {
-        months--;
-        const previousMonth = new Date(now.getFullYear(), now.getMonth(), 0);
-        days += previousMonth.getDate();
-      }
+  document.body.style.overflow = "hidden";
+</script>
 
-      if (months < 0) {
-        years--;
-        months += 12;
-      }
 
-      const elapsedHours = Math.floor((now - start) / 36e5) % 24;
-
-      document.getElementById("years").textContent = years;
-      document.getElementById("months").textContent = months;
-      document.getElementById("days").textContent = days;
-      document.getElementById("hours").textContent = elapsedHours;
-      localStorage.setItem("romanticStartDate", startDate.value);
-    }
-
-    startDate.addEventListener("change", updateCounter);
-    updateCounter();
-    setInterval(updateCounter, 60000);
-
-    const signatureInput = document.getElementById("signatureInput");
-    const savedSignature = localStorage.getItem("romanticSignature");
-    if (!savedSignature) signatureInput.value = "De tu solecito y amado marido ❤️";
-    if (savedSignature) signatureInput.value = savedSignature;
-
-    signatureInput.addEventListener("input", () => {
-      localStorage.setItem("romanticSignature", signatureInput.value);
-      const signature = document.querySelector(".signature");
-      signature.innerHTML = "Con todo mi amor,<br />" +
-        (signatureInput.value || "tu persona que te adora ❤️");
-    });
-    //});
-
-    const openingScreen = document.getElementById("openingScreen");
-    const openSurprise = document.getElementById("openSurprise");
-
-    openSurprise.addEventListener("click", () => {
-      openingScreen.classList.add("opened");
-      document.body.style.overflow = "auto";
-      setTimeout(() => {
-        document.getElementById("carta").scrollIntoView({ behavior: "smooth" });
-      }, 850);
-    });
-
-  </script>
 </body>
 </html>
